@@ -1,0 +1,27 @@
+{
+    "compilerOptions": {
+      "target": "ES2017",
+      "lib": ["ESNext"],
+      "module": "CommonJS",
+      "moduleResolution": "Node",
+      "rootDir": "src",
+      "outDir": "dist",
+      "strict": true,
+      "esModuleInterop": true,
+      "skipLibCheck": true,
+      "resolveJsonModule": true,
+      "baseUrl": "./",
+      "paths": {
+        "@routes/*": ["./src/routes/*"],
+        "@controllers/*": ["./src/controllers/*"],
+        "@middlewares/*": ["./src/middlewares/*"],
+        "@prisma/*": ["./prisma/*"],
+        "@config/*": ["./src/config/*"],
+        "@utils/*": ["./src/utils/*"],
+        "@services/*": ["./src/services/*"]
+      }
+    },
+    "include": ["src"],
+    "exclude": ["node_modules", "dist"]
+  }
+  
