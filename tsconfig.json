@@ -18,8 +18,9 @@
         "name": "next"
       }
     ],
+    "baseUrl": "./", // Set baseUrl to the root directory
     "paths": {
-      "@/*": ["./src/*"], // Src 
+      "@/*": ["./src/*"], // Src folder
       "@components/*": ["src/components/*"],  // Reusable UI components
       "@utils/*": ["src/utils/*"],            // Helper functions
       "@styles/*": ["src/styles/*"],          // Global styles / Tailwind
