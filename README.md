@@ -1,36 +1,113 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# FilmFolio
+
+A full-stack web application for managing and sharing your movie collection.
+
+## Prerequisites
+
+- Node.js (v18 or higher)
+- PostgreSQL
+- npm or yarn
+
+## Project Structure
+
+```
+FilmFolio/
+├── filmfolio-frontend/  # Next.js frontend application
+└── filmfolio-backend/   # Express.js backend application
+```
 
 ## Getting Started
 
-First, run the development server:
+### Backend Setup
 
+1. Navigate to the backend directory:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+cd filmfolio-backend
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies:
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Create a `.env` file in the backend directory:
+```env
+DATABASE_URL="postgresql://username:password@localhost:5432/filmfolio"
+JWT_SECRET="your-secret-key"
+PORT=3001
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. Set up the database:
+```bash
+npx prisma db push
+```
 
-## Learn More
+5. Start the backend server:
+```bash
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+The backend will run on http://localhost:3001
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Frontend Setup
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Navigate to the frontend directory:
+```bash
+cd filmfolio-frontend
+```
 
-## Deploy on Vercel
+2. Install dependencies:
+```bash
+npm install
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+3. Create a `.env.local` file in the frontend directory:
+```env
+NEXT_PUBLIC_API_URL=http://localhost:3001
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+4. Start the frontend development server:
+```bash
+npm run dev
+```
+
+The application will be available at http://localhost:3000
+
+## Features
+
+- User authentication
+- Profile management
+- Post creation and sharing
+- Real-time updates using Socket.IO
+- Image upload and processing
+
+## Technologies Used
+
+- **Frontend:**
+  - Next.js 15
+  - React 19
+  - TailwindCSS
+  - Axios
+
+- **Backend:**
+  - Express.js
+  - Prisma
+  - PostgreSQL
+  - Socket.IO
+  - JWT Authentication
+
+## Development
+
+- Run tests: `npm test` (in respective directories)
+- Lint code: `npm run lint`
+- Build for production:
+  - Frontend: `npm run build`
+  - Backend: `npm run build`
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a new Pull Request
