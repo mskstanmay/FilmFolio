@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Navbar from "../components/Navbar";
 
 interface Post {
   id: string;
@@ -27,30 +28,45 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/FilmFolio.svg"
-          alt="FilmFolio logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <h1 className="text-lg font-semibold">Latest Posts</h1>
-        <ul className="w-full max-w-2xl space-y-4">
+    <div className="min-h-screen bg-background">
+      <Navbar />
+      <main className="container mx-auto px-4 py-12 max-w-4xl">
+        <div className="flex flex-col items-center mb-12">
+          <Image
+            className="dark:invert mb-8 dark:filter dark:grayscale"
+            src="/FilmFolio.svg"
+            alt="FilmFolio logo"
+            width={200}
+            height={42}
+            priority
+          />
+          <h1 className="text-2xl font-bold text-foreground mb-8">Latest Posts</h1>
+        </div>
+        
+        <ul className="space-y-6">
           {posts.length > 0 ? (
             posts.map((post) => (
-              <li key={post.id} className="p-4 border rounded-lg shadow-sm">
-                <h2 className="text-lg font-bold">{post.title}</h2>
-                <p className="text-gray-600">{post.content}</p>
-                <span className="text-xs text-gray-400">
-                  {new Date(post.createdAt).toLocaleDateString()}
-                </span>
+              <li 
+                key={post.id} 
+                className="bg-white dark:bg-zinc-900 p-6 rounded-xl shadow-sm 
+                         border border-zinc-200 dark:border-zinc-800
+                         transition-all duration-200 hover:shadow-md"
+              >
+                <h2 className="text-xl font-bold mb-3 text-foreground">{post.title}</h2>
+                <p className="text-zinc-600 dark:text-zinc-400 mb-4 line-clamp-3">{post.content}</p>
+                <time className="text-sm text-zinc-500 dark:text-zinc-500">
+                  {new Date(post.createdAt).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                  })}
+                </time>
               </li>
             ))
           ) : (
-            <p className="text-gray-500">No posts available</p>
+            <p className="text-center text-zinc-500 dark:text-zinc-400 py-8">
+              No posts available
+            </p>
           )}
         </ul>
       </main>
