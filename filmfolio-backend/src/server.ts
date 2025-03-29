@@ -1,7 +1,9 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import passport from './config/passport';
 
+import authRoutes from "./routes/authRoutes";
 import userRoutes from "./routes/userRoutes"; // ✅ Import User Routes
 import postRoutes from "./routes/postRoutes"; // ✅ Import Post Routes
 
@@ -20,9 +22,13 @@ app.use(
 
 app.use(express.json());
 
+// Initialize Passport
+app.use(passport.initialize());
+
 // Basic API Route
 
 // API routes
+app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes); // ✅ Add user routes
 app.use("/api/posts", postRoutes); // ✅ Add post routes
 

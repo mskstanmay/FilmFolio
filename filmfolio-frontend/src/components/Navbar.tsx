@@ -1,40 +1,32 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 
 export default function Navbar() {
     return (
-        <nav className="border-b border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 w-full">
-            <div className="container mx-auto px-4">
-                <div className="flex items-center justify-between h-16 w-full"> {/* justify-between is key */}
-                    <Link href="/" className="flex items-center">
-                        <Image
-                            src="/FilmFolio.svg"
-                            alt="FilmFolio logo"
-                            width={120}
-                            height={25}
-                            className="dark:invert"
-                        />
+        <nav className="fixed top-0 w-full z-50 glass-effect">
+            <div className="container">
+                <div className="flex items-center justify-between h-16">
+                    <Link href="/" className="text-lg font-medium">
+                        FilmFolio
                     </Link>
 
-                    <div className="flex items-center gap-6">
+                    <div className="flex items-center space-x-8">
                         <Link
                             href="/"
-                            className="text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100"
+                            className="text-sm font-medium opacity-70 hover:opacity-100 transition-opacity"
                         >
                             Home
                         </Link>
-                        <p>         </p>
                         <Link
                             href="/movies"
-                            className="text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100"
+                            className="text-sm font-medium opacity-70 hover:opacity-100 transition-opacity"
                         >
                             Movies
                         </Link>
                         <Link
                             href="/about"
-                            className="text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100"
+                            className="text-sm font-medium opacity-70 hover:opacity-100 transition-opacity"
                         >
                             About
                         </Link>

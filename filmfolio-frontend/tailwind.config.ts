@@ -8,13 +8,16 @@ export default {
   ],
   theme: {
     extend: {
-      colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+      maxWidth: {
+        '1440': '1440px',
       },
-      container: {
-        center: true,
-        padding: "1rem",
+      colors: {
+        primary: "var(--primary)",
+        secondary: "var(--secondary)",
+      },
+      fontFamily: {
+        sans: ['var(--font-geist-sans)'],
+        mono: ['var(--font-geist-mono)'],
       },
     },
   },

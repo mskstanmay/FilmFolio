@@ -21,7 +21,7 @@
         "@services/*": ["./src/services/*"]
       }
     },
-    "include": ["src"],
-    "exclude": ["node_modules", "dist"]
+    "include": ["src/**/*", "src/types"],
+    "exclude": ["node_modules", "dist"],
+    "typeRoots": ["./node_modules/@types", "./src/types"]
   }
-  

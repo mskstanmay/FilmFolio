@@ -1,75 +1,101 @@
 "use client";
 
-import Image from "next/image";
-import { useEffect, useState } from "react";
-import axios from "axios";
-import Navbar from "../components/Navbar";
+import React from 'react';
+import Head from 'next/head';
+import Link from 'next/link';
+import GoogleButton from '../components/GoogleButton';
 
-interface Post {
-  id: string;
-  title: string;
-  content: string;
-  createdAt: string;
-}
-
-export default function Home() {
-  const [posts, setPosts] = useState<Post[]>([]);
-
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const response = await axios.get("http://localhost:5000/api/posts");
-        setPosts(response.data);
-      } catch (error) {
-        console.error("Failed to fetch posts", error);
-      }
-    };
-    fetchPosts();
-  }, []);
+const Home: React.FC = () => {
+  // const [email, setEmail] = useState('');
+  // const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setEmail(e.target.value);
+  // };
 
   return (
-    <div className="min-h-screen bg-background">
-      <Navbar />
-      <main className="container mx-auto px-4 py-12 max-w-4xl">
-        <div className="flex flex-col items-center mb-12">
-          <Image
-            className="dark:invert mb-8 dark:filter dark:grayscale"
-            src="/FilmFolio.svg"
-            alt="FilmFolio logo"
-            width={200}
-            height={42}
-            priority
-          />
-          <h1 className="text-2xl font-bold text-foreground mb-8">Latest Posts</h1>
-        </div>
-        
-        <ul className="space-y-6">
-          {posts.length > 0 ? (
-            posts.map((post) => (
-              <li 
-                key={post.id} 
-                className="bg-white dark:bg-zinc-900 p-6 rounded-xl shadow-sm 
-                         border border-zinc-200 dark:border-zinc-800
-                         transition-all duration-200 hover:shadow-md"
-              >
-                <h2 className="text-xl font-bold mb-3 text-foreground">{post.title}</h2>
-                <p className="text-zinc-600 dark:text-zinc-400 mb-4 line-clamp-3">{post.content}</p>
-                <time className="text-sm text-zinc-500 dark:text-zinc-500">
-                  {new Date(post.createdAt).toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                  })}
-                </time>
-              </li>
-            ))
-          ) : (
-            <p className="text-center text-zinc-500 dark:text-zinc-400 py-8">
-              No posts available
-            </p>
-          )}
-        </ul>
-      </main>
-    </div>
+    <>
+      <Head>
+        <title>Filmfolio</title>
+      </Head>
+      <div className="min-h-screen bg-white">
+        {/* Header */}
+        <header className="fixed top-0 left-0 right-0 bg-white border-b border-gray-100">
+          <div className="max-w-[1440px] mx-auto px-8 h-16 flex items-center justify-between">
+            <Link href="/" className="text-2xl font-bold">FilmFolio</Link>
+            <nav className="hidden md:flex items-center space-x-8">
+              <Link href="/people" className="flex flex-col items-center text-gray-600 hover:text-black">
+                <i className="far fa-user-circle text-xl"></i>
+                <span className="text-xs mt-1">People</span>
+              </Link>
+              <Link href="/movies" className="flex flex-col items-center text-gray-600 hover:text-black">
+                <i className="fas fa-film text-xl"></i>
+                <span className="text-xs mt-1">Movies</span>
+              </Link>
+            </nav>
+            <div className="flex items-center space-x-4">
+              <Link href="/register" className="px-6 py-2 text-sm font-medium text-black border border-black rounded-full hover:bg-gray-50">
+                Join now
+              </Link>
+              <Link href="/login" className="px-6 py-2 text-sm font-medium text-black border border-black rounded-full hover:bg-gray-50">
+                Sign in
+              </Link>
+            </div>
+          </div>
+        </header>
+
+        {/* Main Content */}
+        <main className="pt-16 min-h-screen">
+          <div className="max-w-[1440px] mx-auto px-8 py-16 flex">
+            {/* Left Section */}
+            <div className="w-1/2 pr-12 pt-16">
+              <h1 className="text-6xl font-light text-black mb-12">
+                Your personal Movie community
+              </h1>
+              <p className="text-xl text-gray-600">
+                Connect with film industry professionals, showcase your portfolio, 
+                and discover opportunities in the world of cinema. Your next 
+                collaboration starts here.
+              </p>
+              <div className="space-y-4 max-w-md">
+                <GoogleButton className="rounded-full" />
+                <p className="text-sm text-gray-600 mt-4">
+                  By clicking Continue, you agree to FilmFolio's{" "}
+                  <a href="#" className="text-black hover:underline">
+                    User Agreement
+                  </a>
+                  ,{" "}
+                  <a href="#" className="text-black hover:underline">
+                    Privacy Policy
+                  </a>
+                  , and{" "}
+                  <a href="#" className="text-black hover:underline">
+                    Cookie Policy
+                  </a>
+                  .
+                </p>
+                <p className="text-base mt-8">
+                  New to FilmFolio?{" "}
+                  <a href="#" className="text-black font-medium hover:underline">
+                    Join now
+                  </a>
+                </p>
+              </div>
+            </div>
+
+            {/* Right Section */}
+            <div className="w-1/2">
+              <div className="relative h-full">
+                <img
+                  src="/illustration.png"
+                  alt="Movie illustration"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </>
   );
-}
+};
+
+export default Home;
