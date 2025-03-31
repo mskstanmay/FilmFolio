@@ -1,7 +1,6 @@
 import passport from 'passport';
-import { Strategy as GoogleStrategy, Profile } from 'passport-google-oauth20';
+import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import { PrismaClient } from '@prisma/client';
-import { VerifyCallback } from 'passport-oauth2';
 
 const prisma = new PrismaClient();
 
@@ -10,35 +9,30 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-      callbackURL: process.env.GOOGLE_CALLBACK_URL,
+      callbackURL: `${process.env.BACKEND_URL}/api/auth/google/callback`,
     },
-    async (
-      accessToken: string,
-      refreshToken: string,
-      profile: Profile,
-      done: VerifyCallback
-    ) => {
+    async (accessToken, refreshToken, profile, done) => {
       try {
-        const existingUser = await prisma.user.findUnique({
-          where: { email: profile.emails?.[0].value }
-        });
-
-        if (existingUser) {
-          return done(null, existingUser);
-        }
-
-        const newUser = await prisma.user.create({
-          data: {
-            email: profile.emails?.[0].value || '',
+        const user = await prisma.user.upsert({
+          where: { googleId: profile.id },
+          update: {
             name: profile.displayName,
+            email: profile.emails?.[0].value,
+            avatar: profile.photos?.[0].value,
+          },
+          create: {
             googleId: profile.id,
-            avatar: profile.photos?.[0].value || null
-          }
+            name: profile.displayName,
+            email: profile.emails?.[0].value || '',
+            avatar: profile.photos?.[0].value || '',
+            role: 'USER',
+            password: '', // Empty password for Google OAuth users
+          },
         });
 
-        return done(null, newUser);
+        return done(null, user);
       } catch (error) {
-        return done(error as Error, undefined);
+        return done(error as Error);
       }
     }
   )

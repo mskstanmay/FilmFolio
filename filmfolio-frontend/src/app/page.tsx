@@ -26,18 +26,19 @@ const Home: React.FC = () => {
                 <i className="far fa-user-circle text-xl"></i>
                 <span className="text-xs mt-1">People</span>
               </Link>
-              <Link href="/movies" className="flex flex-col items-center text-gray-600 hover:text-black">
-                <i className="fas fa-film text-xl"></i>
-                <span className="text-xs mt-1">Movies</span>
+              <Link href="/marketplace" className="flex flex-col items-center text-gray-600 hover:text-black">
+                <i className="fas fa-store text-xl"></i>
+                <span className="text-xs mt-1">Marketplace</span>
               </Link>
             </nav>
             <div className="flex items-center space-x-4">
-              <Link href="/register" className="px-6 py-2 text-sm font-medium text-black border border-black rounded-full hover:bg-gray-50">
+              {/* TODO: UN COMMENT THIS */}
+              {/* <Link href="/register" className="px-6 py-2 text-sm font-medium text-black border border-black rounded-full hover:bg-gray-50">
                 Join now
               </Link>
               <Link href="/login" className="px-6 py-2 text-sm font-medium text-black border border-black rounded-full hover:bg-gray-50">
                 Sign in
-              </Link>
+              </Link> */}
             </div>
           </div>
         </header>
