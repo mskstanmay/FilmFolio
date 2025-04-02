@@ -8,60 +8,60 @@ datasource db {
 }
 
 model User {
-  id           String    @id @default(cuid())
-  email        String    @unique
-  name         String
-  password     String?
-  googleId     String?   @unique
-  avatar       String?
-  bio          String?   @db.Text
-  role         UserRole  @default(USER)
-  isVerified   Boolean   @default(false)
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
-  posts        Post[]
-  comments     Comment[]
-  likes        Like[]
-  followers    Follow[]  @relation("following")
-  following    Follow[]  @relation("follower")
-  watchlist    Movie[]   @relation("UserWatchlist")
-  favorites    Movie[]   @relation("UserFavorites")
+  id         String    @id @default(cuid())
+  name       String
+  email      String    @unique
+  password   String?
+  createdAt  DateTime  @default(now())
+  avatar     String?
+  googleId   String?   @unique
+  updatedAt  DateTime  @updatedAt
+  bio        String?
+  isVerified Boolean   @default(false)
+  role       UserRole  @default(USER)
+  comments   Comment[]
+  following  Follow[]  @relation("follower")
+  followers  Follow[]  @relation("following")
+  likes      Like[]
+  posts      Post[]
+  favorites  Movie[]   @relation("UserFavorites")
+  watchlist  Movie[]   @relation("UserWatchlist")
 }
 
 model Post {
   id        String    @id @default(uuid())
   title     String
-  content   String    @db.Text
+  content   String
+  createdAt DateTime  @default(now())
   authorId  String
-  movieId   String?
   images    String[]
+  movieId   String?
   rating    Int?      @default(0)
-  author    User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  movie     Movie?    @relation(fields: [movieId], references: [id])
+  updatedAt DateTime  @updatedAt
   comments  Comment[]
   likes     Like[]
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  author    User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  movie     Movie?    @relation(fields: [movieId], references: [id])
 }
 
 model Comment {
   id        String   @id @default(uuid())
-  content   String   @db.Text
+  content   String
   authorId  String
   postId    String
-  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
 }
 
 model Like {
   id        String   @id @default(uuid())
   authorId  String
   postId    String
+  createdAt DateTime @default(now())
   author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
   post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
-  createdAt DateTime @default(now())
 
   @@unique([authorId, postId])
 }
@@ -71,24 +71,47 @@ model Movie {
   tmdbId      String   @unique
   title       String
   posterPath  String?
-  overview    String   @db.Text
+  overview    String
   releaseDate DateTime
-  posts       Post[]
-  watchedBy   User[]   @relation("UserWatchlist")
-  favoritedBy User[]   @relation("UserFavorites")
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  posts       Post[]
+  favoritedBy User[]   @relation("UserFavorites")
+  watchedBy   User[]   @relation("UserWatchlist")
 }
 
 model Follow {
   id          String   @id @default(uuid())
   followerId  String
   followingId String
+  createdAt   DateTime @default(now())
   follower    User     @relation("follower", fields: [followerId], references: [id], onDelete: Cascade)
   following   User     @relation("following", fields: [followingId], references: [id], onDelete: Cascade)
-  createdAt   DateTime @default(now())
 
   @@unique([followerId, followingId])
+}
+
+model Equipment {
+  id          String   @id @default(cuid())
+  name        String
+  category    String
+  location    String
+  description String
+  price       String
+  image       String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime
+}
+
+model People {
+  id          String   @id @default(uuid())
+  name        String
+  location    String
+  description String
+  role        String
+  image       String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 enum UserRole {
@@ -96,4 +119,3 @@ enum UserRole {
   ADMIN
   MODERATOR
 }
-

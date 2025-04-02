@@ -1,15 +1,34 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import Navbar from '../../components/Navbar';
+import AddEquipmentForm from '../../components/AddEquipmentForm';
 
 export default function DashboardPage() {
+  const [showAddEquipment, setShowAddEquipment] = useState(false);
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Navbar />
       <main className="max-w-6xl mx-auto pt-24 px-4">
         <h1 className="text-3xl font-bold text-center mb-12">Welcome to FilmFolio</h1>
+        
+        <div className="mb-8 text-center">
+          <button
+            onClick={() => setShowAddEquipment(!showAddEquipment)}
+            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+          >
+            {showAddEquipment ? 'Cancel' : 'Add Equipment for Rent'}
+          </button>
+
+          {showAddEquipment && (
+            <div className="mt-4 max-w-2xl mx-auto">
+              <AddEquipmentForm />
+            </div>
+          )}
+        </div>
+
         <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           <Link href="/marketplace" 
             className="block group bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-md transition-shadow">

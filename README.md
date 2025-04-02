@@ -1,12 +1,13 @@
 # FilmFolio
 
-A full-stack web application for managing and sharing your movie collection.
+A community-driven platform for movie enthusiasts to connect, share, and discover films together.
 
 ## Prerequisites
 
 - Node.js (v18 or higher)
-- PostgreSQL
-- npm or yarn
+- PostgreSQL (latest stable version)
+- npm or yarn package manager
+- Modern web browser (Chrome, Firefox, Safari, Edge)
 
 ## Project Structure
 
